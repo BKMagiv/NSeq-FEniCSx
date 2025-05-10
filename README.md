@@ -25,3 +25,9 @@ $$
                                                         u &= 0      \quad &\text{in}\quad\text{otherwise}\times[0,T].
 \end{align*}
 $$
+
+<div align = "center">
+  <img src = "https://github.com/BKMagiv/NSeq-FEniCSx/2D_lid_driven_cavity.gif">
+</div>
+
+![Image](https://github.com/BKMagiv/NSeq-FEniCSx/2D_lid_driven_cavity.gif)
