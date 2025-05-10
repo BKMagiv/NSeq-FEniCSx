@@ -26,8 +26,6 @@ $$
 \end{align*}
 $$
 
-<div align = "center">
-  <img src = "https://github.com/BKMagiv/NSeq-FEniCSx/2D_lid_driven_cavity.gif">
+<div align = "left">
+  <img src = "https://github.com/BKMagiv/NSeq-FEniCSx/blob/71a3f5f9c24e48737ee8a9880cf0d5648b89922f/images/2D_lid_driven_cavity.gif" width = 300>
 </div>
-
-![Image](https://github.com/BKMagiv/NSeq-FEniCSx/2D_lid_driven_cavity.gif)
