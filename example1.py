@@ -1,4 +1,7 @@
-# 2D incompressible Navier{Stokes equations
+# 2D incompressible Navier-Stokes equations
+# \Omega = [0, 1]^2
+# forcing term f = (10, 0)
+
 import importlib.util
 if importlib.util.find_spec("petsc4py") is not None:
     import dolfinx
@@ -143,46 +146,21 @@ for j in range(M):
     assemble_vector_block(b, L_blocked, a_blocked, bcs = bcs) # type: ignore
 
 if domain.comm.rank == 0
-  x = V.tabulate_dof_coordinates()[:, :2]
-  u_values = u_h.x.array.reshape(-1, domain.geometry.dim)
-  speed = sqrt(u_values[:,0]**2 + u_values[:,1]**2)
+    x = V.tabulate_dof_coordinates()[:, :2]
+    u_values = u_n.x.array.reshape(-1, domain.geometry.dim)
+    speed = sqrt(u_values[:,0]**2 + u_values[:,1]**2)
 
+    fig, axs = plt.subplots(figsize = (12, 6))
+    # using LaTeX 
+    plt.rcParams["text.usetex"] = True
+    plt.rcParams["font.family"] = "serif"
+    # draw the speed scalar field
+    axs.tripcolor(x[:,0], x[:,1], speed, shading = 'gouraud', cmap = 'plasma')
+    axs.set_title(r"Speed field $u$ at t = {}".format(T), fontsize = 16)
+    axs.set_xlabel(r"$x$", fontsize = 14)
+    axs.set_ylabel(r"$y$", fontsize = 14)
+    axs.axis('equal')
+    axs.grid(True, linestyle = '--', alpha = 0.5) 
 
-  fig, axs = plt.subplots(1, 2, figsize = (12, 6))
-  # 启用 LaTeX 渲染
-  plt.rcParams["text.usetex"] = True
-  plt.rcParams["font.family"] = "serif"
-
-  # 速度标量场
-  pcm = axs[0].tripcolor(x[:,0], x[:,1], speed, shading = 'gouraud', cmap = 'plasma')
-  axs[0].set_title(r"Speed field $u$ at t = {}".format(T), fontsize = 16)
-  axs[0].set_xlabel(r"$x$", fontsize = 14)
-  axs[0].set_ylabel(r"$y$", fontsize = 14)
-  axs[0].axis('equal')
-  axs[0].grid(True, linestyle = '--', alpha = 0.5)  # 添加网格线
-
-  # # 速度向量场
-
-  # 提取节点位置
-  x_coords = x[:, 0]
-  y_coords = x[:, 1]
-
-  # 提取速度分量
-  u_vals = u_h.x.array.reshape(-1, domain.geometry.dim)
-
-  # 稀疏采样：选择每隔几个点画一个箭头
-  skip = 4  # 调整密度
-  x_sub = x_coords[::skip]
-  y_sub = y_coords[::skip]
-  u_sub = u_vals[::skip, 0]
-  v_sub = u_vals[::skip, 1]
-
-  axs[1].quiver(x_sub, y_sub, u_sub, v_sub, scale = 50, color = 'r')
-  axs[1].set_title(r"Velocity vector field at $t = {}$".format(T), fontsize = 16)
-  axs[1].set_xlabel(r"$x$")
-  axs[1].set_ylabel(r"$y$")
-  axs[1].axis('equal')
-  axs[1].grid(True, linestyle = '--', alpha = 0.5)
-
-  plt.tight_layout()
-  plt.show()
+    plt.tight_layout()
+    plt.show()
